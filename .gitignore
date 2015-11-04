@@ -1,0 +1,8 @@
+node_modules*/
+packages*/
+hui.widgets/Gruntfile.js
+.sass-cache/
+.idea/*
+.ftppass
+_temp/
+react_reference/

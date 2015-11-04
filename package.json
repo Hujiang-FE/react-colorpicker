@@ -1,0 +1,30 @@
+{
+  "name": "react-widgets",
+  "version": "0.1.0",
+  "description": "An implement of widgets with react.js",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --watch"
+  },
+  "author": "Daniel.He",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=0.13"
+  },
+  "devDependencies": {
+    "babel": "latest",
+    "babel-core": "latest",
+    "babel-eslint": "latest",
+    "babel-loader": "latest",
+    "css-loader": "^0.14.5",
+    "extract-text-webpack-plugin": "^0.8.1",
+    "install": "^0.1.8",
+    "npm": "^2.11.0",
+    "react": "^0.13.1",
+    "react-colorpicker": "^0.3.14",
+    "react-hot-loader": "^1.2.7",
+    "react-router": "^0.13.1",
+    "store.js": "^1.0.4",
+    "style-loader": "^0.12.3"
+  }
+}
