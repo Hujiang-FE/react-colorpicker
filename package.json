@@ -8,6 +8,10 @@
   },
   "author": "Daniel.He",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielhe/react-colorpicker"
+  },
   "peerDependencies": {
     "react": ">=0.13"
   },

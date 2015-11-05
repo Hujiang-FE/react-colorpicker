@@ -5,4 +5,5 @@ hui.widgets/Gruntfile.js
 .idea/*
 .ftppass
 _temp/
+npm-debug.log
 react_reference/
