@@ -8,12 +8,12 @@ var conditionalCompile = new webpack.DefinePlugin({
 
 module.exports = {
     entry: {
-        widgets: "./src/index.js"
+        'react-colorpicker': "./src/index.js"
     }
     , output: {
         path: __dirname + "/dist",
         filename: '[name].js',
-        library: 'ReactWidgets',
+        library: 'ColorPicker',
         libraryTarget: 'umd'
     }
     , module: {

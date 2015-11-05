@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["ReactWidgets"] = factory();
+		exports["ColorPicker"] = factory();
 	else
-		root["ReactWidgets"] = factory();
+		root["ColorPicker"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -111,7 +111,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		mixins: [_mixinsDrag2['default']],
 
 		propTypes: {
-			enableRGBA: React.PropTypes.bool,
 			currentColor: '#fff',
 			onChange: React.PropTypes.func
 		},
@@ -159,9 +158,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		handlerPickerClick: function handlerPickerClick(event) {
 			var el = event.target,
-			    color = el.getAttribute('data-color');
+			    color = el.getAttribute('data-color'),
+			    crgb = _commonColorUtil2['default'].hexToRGB(color),
+			    hsv = _commonColorUtil2['default'].getHSVFromRGB(crgb.r, crgb.g, crgb.b);
 
-			this.changeColor(this._getCurrentColor());
+			this.setState({
+				currentHSV: hsv
+			});
+
+			this.changeColor(color);
 		},
 
 		handleToggle: function handleToggle(event) {
@@ -191,7 +196,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		handleDrag: function handleDrag(event, offset) {
 			var position = this._calculatePosition(offset),
-			    HSV = this._calculateHSV(position);
+			    HSV = this._calculateHSV(position),
+			    self = this;
 
 			this.setState({
 				currentHSV: {
@@ -199,9 +205,9 @@ return /******/ (function(modules) { // webpackBootstrap
 					saturation: HSV.saturation,
 					value: HSV.value
 				}
+			}, function () {
+				self.changeColor(self._getCurrentColor());
 			});
-
-			this.changeColor(this._getCurrentColor());
 		},
 
 		handleRulerClick: function handleRulerClick(event) {
@@ -209,7 +215,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			    height = el.clientHeight,
 			    offsetTop = $(el).offset().top,
 			    offsetY,
-			    hue;
+			    hue,
+			    self = this;
 
 			offsetY = event.pageY - offsetTop;
 			hue = offsetY / height;
@@ -220,9 +227,9 @@ return /******/ (function(modules) { // webpackBootstrap
 					saturation: this.state.currentHSV.saturation,
 					value: this.state.currentHSV.value
 				}
+			}, function () {
+				self.changeColor(self._getCurrentColor());
 			});
-
-			this.changeColor(this._getCurrentColor());
 		},
 
 		fire: function fire(name, data) {
@@ -293,7 +300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		},
 
 		renderHeadbar: function renderHeadbar() {
-			console.log(this.state.currentHSV);
+
 			var curColor = this._getCurrentColor();
 			return React.createElement(
 				'div',
@@ -532,21 +539,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 	    return result ? {
-	        r: parseInt(result[1], 16) / 256,
-	        g: parseInt(result[2], 16) / 256,
-	        b: parseInt(result[3], 16) / 256
+	        r: parseInt(result[1], 16) / 255,
+	        g: parseInt(result[2], 16) / 255,
+	        b: parseInt(result[3], 16) / 255
 	    } : null;
 	}
 
-	// function rgbToHex(r, g, b) {
-	//     var s = (65536 * Math.round(255 * r) + 256 * Math.round(255 * g) + Math.round(255 * b)).toString(16);
-	//     return "#" + "00000".substr(0, 6 - s.length) + s
-	// }
-
 	function rgbToHex(r, g, b) {
-	    var s = (65536 * parseInt(256 * r) + 256 * parseInt(256 * g) + parseInt(256 * b)).toString(16);
+	    var s = (65536 * Math.round(255 * r) + 256 * Math.round(255 * g) + Math.round(255 * b)).toString(16);
 	    return "#" + "00000".substr(0, 6 - s.length) + s;
 	}
+
+	// function rgbToHex(r, g, b) {
+	//     var s = (65536 * parseInt(255 * r) + 256 * parseInt(255 * g) + parseInt(255 * b)).toString(16),
+	//         color = "#" + "00000".substr(0, 6 - s.length) + s;
+
+	//     console.log(65536 * parseInt(256 * r), 256 * parseInt(256 * g), parseInt(256 * b));
+	//     return color;
+	//}
 
 	// t = Hue(色彩), i = saturation(饱和度), e = value（亮度）
 	function getRGBFromHSV(t, i, e) {
@@ -612,7 +622,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.getHexFromHSV = function (hsv) {
 	    var rgb = getRGBFromHSV(hsv.hue, hsv.saturation, hsv.value);
-
 	    return rgbToHex(rgb.red, rgb.green, rgb.blue);
 	};
 
