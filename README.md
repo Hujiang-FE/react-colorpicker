@@ -3,7 +3,7 @@
 An implement of colorpicker component with react.js
 
 
-## Snapshot
+## Screenshot
 ![snapshot](http://7xlsqt.com1.z0.glb.clouddn.com/colorpicker1.png)
 ![snapshot](http://7xlsqt.com1.z0.glb.clouddn.com/colorpicker2.png)
 
